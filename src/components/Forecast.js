@@ -9,19 +9,19 @@ function Forecast({ weather }) {
 
   useEffect(() => {
     const fetchForecastData = async () => {
-      const apiKey = "b03a640e5ef6980o4da35b006t5f2942";
-      const url = `https://api.shecodes.io/weather/v1/forecast?query=${data.city}&key=${apiKey}&units=metric`;
+      const apiKey = "4d6956d9229e180854db1715f29b8c8b"; // Your API Key
+      const url = `https://api.openweathermap.org/data/2.5/forecast?q=${data.name}&appid=${apiKey}&units=metric`;
 
       try {
         const response = await axios.get(url);
-        setForecastData(response.data.daily);
+        setForecastData(response.data.list);
       } catch (error) {
         console.log("Error fetching forecast data:", error);
       }
     };
 
     fetchForecastData();
-  }, [data.city]);
+  }, [data.name]);
 
   const formatDay = (dateString) => {
     const options = { weekday: "short" };
@@ -44,60 +44,48 @@ function Forecast({ weather }) {
     setIsCelsius((prevState) => !prevState);
   };
 
-  const convertToCelsius = (temperature) => {
-    return Math.round((temperature - 32) * (5 / 9));
-  };
-
-  const convertToFahrenheit = (temperature) => {
-    return Math.round((temperature * 9) / 5 + 32);
-  };
-
   const renderTemperature = (temperature) => {
-    if (isCelsius) {
-      return Math.round(temperature);
-    } else {
-      return convertToFahrenheit(temperature);
-    }
+    return isCelsius ? Math.round(temperature) : Math.round((temperature * 9) / 5 + 32);
   };
 
   return (
     <div>
       <div className="city-name">
         <h2>
-          {data.city}, <span>{data.country}</span>
+          {data.name}, <span>{data.sys.country}</span>
         </h2>
       </div>
       <div className="date">
         <span>{getCurrentDate()}</span>
       </div>
       <div className="temp">
-        {data.condition.icon_url && (
+        {data.weather[0].icon && (
           <img
-            src={data.condition.icon_url}
-            alt={data.condition.description}
+            src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+            alt={data.weather[0].description}
             className="temp-icon"
           />
         )}
-        {renderTemperature(data.temperature.current)}
+        {renderTemperature(data.main.temp)}
         <sup className="temp-deg" onClick={toggleTemperatureUnit}>
           {isCelsius ? "°C" : "°F"} | {isCelsius ? "°F" : "°C"}
         </sup>
       </div>
-      <p className="weather-des">{data.condition.description}</p>
+      <p className="weather-des">{data.weather[0].description}</p>
       <div className="weather-info">
         <div className="col">
-          <ReactAnimatedWeather icon="WIND" size="40"/>
+          <ReactAnimatedWeather icon="WIND" size="40" />
           <div>
-            <p className="wind">{data.wind.speed}m/s</p>
+            <p className="wind">{data.wind.speed} m/s</p>
             <p>Wind speed</p>
           </div>
         </div>
         <div className="col">
-          <ReactAnimatedWeather icon="RAIN" size="40"/>
+          <ReactAnimatedWeather icon="RAIN" size="40" />
           <div>
-            <p className="humidity">{data.temperature.humidity}%</p>
+            <p className="humidity">{data.main.humidity}%</p>
             <p>Humidity</p>
-        </div>
+          </div>
         </div>
       </div>
       <div className="forecast">
@@ -105,17 +93,17 @@ function Forecast({ weather }) {
         <div className="forecast-container">
           {forecastData &&
             forecastData.slice(0, 5).map((day) => (
-              <div className="day" key={day.time}>
-                <p className="day-name">{formatDay(day.time)}</p>
-                {day.condition.icon_url && (
+              <div className="day" key={day.dt}>
+                <p className="day-name">{formatDay(day.dt)}</p>
+                {day.weather[0].icon && (
                   <img
                     className="day-icon"
-                    src={day.condition.icon_url}
-                    alt={day.condition.description}
+                    src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                    alt={day.weather[0].description}
                   />
                 )}
                 <p className="day-temperature">
-                  {Math.round(day.temperature.minimum)}°/ <span>{Math.round(day.temperature.maximum)}°</span>
+                  {Math.round(day.main.temp_min)}°/ <span>{Math.round(day.main.temp_max)}°</span>
                 </p>
               </div>
             ))}
@@ -123,6 +111,6 @@ function Forecast({ weather }) {
       </div>
     </div>
   );
-}        
+}
 
 export default Forecast;

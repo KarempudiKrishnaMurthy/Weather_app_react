@@ -40,17 +40,17 @@ function App() {
     ];
 
     const currentDate = new Date();
-    const date = `${days[currentDate.getDay()]} ${currentDate.getDate()} ${months[currentDate.getMonth()]
-      }`;
+    const date = `${days[currentDate.getDay()]} ${currentDate.getDate()} ${months[currentDate.getMonth()]}`;
     return date;
   };
-  //new search function
+
+  // New search function
   const search = async (event) => {
     event.preventDefault();
     if (event.type === "click" || (event.type === "keypress" && event.key === "Enter")) {
       setWeather({ ...weather, loading: true });
-      const apiKey = "b03a640e5ef6980o4da35b006t5f2942";
-      const url = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${apiKey}`;
+      const apiKey = "4d6956d9229e180854db1715f29b8c8b"; // Your API Key
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric`;
 
       await axios
         .get(url)
@@ -67,8 +67,8 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const apiKey = "b03a640e5ef6980o4da35b006t5f2942";
-      const url = `https://api.shecodes.io/weather/v1/current?query=Rabat&key=${apiKey}`;
+      const apiKey = "4d6956d9229e180854db1715f29b8c8b"; // Your API Key
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=Rabat&appid=${apiKey}&units=metric`;
 
       try {
         const response = await axios.get(url);
@@ -84,7 +84,6 @@ function App() {
 
   return (
     <div className="App">
-
       {/* SearchEngine component */}
       <SearchEngine query={query} setQuery={setQuery} search={search} />
 
@@ -108,7 +107,7 @@ function App() {
         </>
       )}
 
-      {weather && weather.data && weather.data.condition && (
+      {weather && weather.data && weather.data.weather && (
         // Forecast component
         <Forecast weather={weather} toDate={toDate} />
       )}
