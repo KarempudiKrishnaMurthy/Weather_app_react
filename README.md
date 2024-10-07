@@ -1,29 +1,25 @@
 # React Weather App
-This is a web app developed as a final project for SheCodes React using React.js. It allows users to search for the weather conditions of any city in the world and provides current weather information. The app fetches weather data using the SheCodes Weather API.
 
-# Features
-- Users can search for weather conditions of any city in the world.
-- The app displays the current weather conditions, including temperature and weather description.
-- The app utilizes the SheCodes Weather API to fetch weather data.
+Welcome to the React Weather App! This web application enables users to search for weather conditions in cities around the globe. The app fetches real-time weather data using a weather API.
 
-# Technologies & Tools Used
-- React.js
-- HTML
-- CSS
-- JavaScript
-- VS Code
-- SheCodes Weather API
+## Features
+- **City Search**: Users can search for weather conditions in any city worldwide.
+- **Current Weather Display**: The app shows current weather details, including temperature and a weather description.
+- **Data Fetching**: Utilizes a weather API for accurate weather information.
 
-# Installation and Usage
-To use this app, you can follow these steps:
+## Technologies & Tools Used
+- **React.js**: Frontend library for building user interfaces.
+- **HTML**: Structure of the web app.
+- **CSS**: Styling the app for better user experience.
+- **JavaScript**: Programming language used for interactive elements.
+- **Visual Studio Code**: Code editor for development.
+- **Weather API**: API for fetching weather data.
 
-- Clone the repository or download the source code.
-- Open the project in your preferred code editor.
-- Run  `npm install` to install the necessary dependencies.
-- Run `npm start` to start the development server.
-- Open your browser and navigate to `http://localhost:3000` to use the app.
+## Installation and Usage
+To get started with the app, follow these steps:
 
-To use the app, simply type the name of the city you want to search for in the search bar and press Enter. The app will display the current weather conditions for the searched city.
+1. Clone the repository or download the source code:
+   ```bash
+   git clone https://github.com/KrishnaMurthyKarempudi/Weather_app_react.git
 
-# License
-This project is licensed under the MIT license.
+You can copy this content directly into your README file. Let me know if you need any further changes!
